@@ -9,7 +9,7 @@ public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int driverId;
-    private String moblie;
+    private String mobile;
     private String password;
     @OneToOne(mappedBy = "driver", cascade = CascadeType.ALL)
     Cab cab;
@@ -19,9 +19,9 @@ public class Driver {
     public Driver() {
     }
 
-    public Driver(int driverId, String moblie, String password, Cab cab, List<TripBooking> tripBookingList) {
+    public Driver(int driverId, String mobile, String password, Cab cab, List<TripBooking> tripBookingList) {
         this.driverId = driverId;
-        this.moblie = moblie;
+        this.mobile = mobile;
         this.password = password;
         this.cab = cab;
         this.tripBookingList = tripBookingList;
@@ -35,12 +35,12 @@ public class Driver {
         this.driverId = driverId;
     }
 
-    public String getMoblie() {
-        return moblie;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMoblie(String moblie) {
-        this.moblie = moblie;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getPassword() {
