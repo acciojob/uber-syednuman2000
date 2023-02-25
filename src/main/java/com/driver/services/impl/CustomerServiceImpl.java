@@ -49,12 +49,8 @@ public class CustomerServiceImpl implements CustomerService {
 		Driver availableDriver = null;
 		for(Driver driver : driverList){
 			if(driver.getCab().getAvailable()){
-				if(availableDriver == null){
+				if(availableDriver == null || driver.getDriverId() < availableDriver.getDriverId()){
 					availableDriver = driver;
-				}else{
-					if(driver.getDriverId() < availableDriver.getDriverId()){
-						availableDriver = driver;
-					}
 				}
 			}
 		}
@@ -88,26 +84,11 @@ public class CustomerServiceImpl implements CustomerService {
 		//Cancel the trip having given trip Id and update TripBooking attributes accordingly
 		TripBooking tripBooking = tripBookingRepository2.findById(tripId).get();
 		tripBooking.setStatus(TripStatus.CANCELED);
+		tripBooking.setBill(0);
 
 		tripBooking.getDriver().getCab().setAvailable(true);
 
-		driverRepository2.save(tripBooking.getDriver());
-
-		Customer customer = tripBooking.getCustomer();
-		List<TripBooking> tripBookingList = customer.getTripBookingList();
-		TripBooking temp = null;
-		for(TripBooking tripBooking1 : tripBookingList){
-			if(tripBooking1.getTripBookingId() == tripId){
-				temp = tripBooking1;
-				break;
-			}
-		}
-		if(temp!=null) {
-			tripBookingList.remove(temp);
-			tripBookingList.add(tripBooking);
-		}
-
-		customerRepository2.save(customer);
+		tripBookingRepository2.save(tripBooking);
 	}
 
 	@Override
@@ -118,22 +99,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 		tripBooking.getDriver().getCab().setAvailable(true);
 
-		driverRepository2.save(tripBooking.getDriver());
-
-		Customer customer = tripBooking.getCustomer();
-		List<TripBooking> tripBookingList = customer.getTripBookingList();
-		TripBooking temp = null;
-		for(TripBooking tripBooking1 : tripBookingList){
-			if(tripBooking1.getTripBookingId() == tripId){
-				temp = tripBooking1;
-				break;
-			}
-		}
-		if(temp!=null) {
-			tripBookingList.remove(temp);
-			tripBookingList.add(tripBooking);
-		}
-
-		customerRepository2.save(customer);
+		tripBookingRepository2.save(tripBooking);
 	}
 }
