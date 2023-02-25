@@ -92,6 +92,22 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBooking.getDriver().getCab().setAvailable(true);
 
 		driverRepository2.save(tripBooking.getDriver());
+
+		Customer customer = tripBooking.getCustomer();
+		List<TripBooking> tripBookingList = customer.getTripBookingList();
+		TripBooking temp = null;
+		for(TripBooking tripBooking1 : tripBookingList){
+			if(tripBooking1.getTripBookingId() == tripId){
+				temp = tripBooking1;
+				break;
+			}
+		}
+		if(temp!=null) {
+			tripBookingList.remove(temp);
+			tripBookingList.add(tripBooking);
+		}
+
+		customerRepository2.save(customer);
 	}
 
 	@Override
@@ -103,5 +119,21 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBooking.getDriver().getCab().setAvailable(true);
 
 		driverRepository2.save(tripBooking.getDriver());
+
+		Customer customer = tripBooking.getCustomer();
+		List<TripBooking> tripBookingList = customer.getTripBookingList();
+		TripBooking temp = null;
+		for(TripBooking tripBooking1 : tripBookingList){
+			if(tripBooking1.getTripBookingId() == tripId){
+				temp = tripBooking1;
+				break;
+			}
+		}
+		if(temp!=null) {
+			tripBookingList.remove(temp);
+			tripBookingList.add(tripBooking);
+		}
+
+		customerRepository2.save(customer);
 	}
 }
